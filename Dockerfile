@@ -3,9 +3,8 @@ FROM ubuntu:16.04
 USER root
 WORKDIR /root
 
-COPY ENTRYPOINT.sh /
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    supervisor \
     curl \
     iproute2 \
     iputils-ping \
@@ -16,9 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     x11-xserver-utils \
     xterm \
     python-tk \
- && rm -rf /var/lib/apt/lists/* \
- && chmod +x /ENTRYPOINT.sh
+    wireshark \
+ && rm -rf /var/lib/apt/lists/*
 
+COPY misc/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ 
 EXPOSE 6633 6653 6640
 
-ENTRYPOINT ["/ENTRYPOINT.sh"]
+CMD ["/usr/bin/supervisord"]
