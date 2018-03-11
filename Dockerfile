@@ -17,9 +17,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-tk \
     wireshark \
  && rm -rf /var/lib/apt/lists/*
-
-COPY misc/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
  
 EXPOSE 6633 6653 6640
-
-CMD ["/usr/bin/supervisord"]
